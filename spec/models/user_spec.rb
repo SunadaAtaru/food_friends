@@ -36,5 +36,21 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_valid
     end
   end
-end
 
+  describe 'avatarのテスト' do
+    include CarrierWave::Test::Matchers
+
+    it 'avatarを添付できること' do
+      user = User.create(
+        email: 'test@example.com',
+        password: 'password',
+        username: 'testuser'
+      )
+      File.open(Rails.root.join('spec', 'fixtures', 'test_image.jpg')) do |f|
+        user.avatar = f
+      end
+      expect(user.save).to be true
+      expect(user.avatar).to be_present
+    end
+  end
+end

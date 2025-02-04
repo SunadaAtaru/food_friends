@@ -8,9 +8,9 @@ RSpec.describe 'Authentication', type: :system do
       fill_in 'Email', with: 'test@example.com'
       fill_in 'Password', with: 'password'
       fill_in 'Password confirmation', with: 'password'
-      expect {
+      expect do
         click_button 'Sign up'
-      }.to change(User, :count).by(1)
+      end.to change(User, :count).by(1)
     end
   end
 end

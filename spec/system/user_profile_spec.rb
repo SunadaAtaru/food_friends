@@ -24,15 +24,15 @@ RSpec.describe 'ユーザープロフィール管理', type: :system do
     # ユーザーがプロフィールを編集できることをテスト
     it 'ユーザーが自分のプロフィールを編集できること' do
       visit edit_user_path(user)
-      
+
       fill_in 'ユーザー名', with: 'updated_username'
       fill_in '自己紹介', with: 'Hello, this is my profile'
       fill_in '住所', with: 'Tokyo'
       fill_in '連絡先', with: '090-1234-5678'
       check 'プロフィールを公開する'
-      
+
       click_button '更新する'
-      
+
       expect(page).to have_content('updated_username')
       expect(page).to have_content('Hello, this is my profile')
     end
@@ -56,6 +56,25 @@ RSpec.describe 'ユーザープロフィール管理', type: :system do
     it '他のユーザーが編集ボタンを表示できないこと' do
       visit user_path(user)
       expect(page).not_to have_link('プロフィールを編集')
+    end
+  end
+
+  describe 'アバター管理' do
+    before do
+      sign_in user
+    end
+
+    # spec/system/user_profile_spec.rb
+    it 'ユーザーがアバターをアップロードできること' do
+          visit edit_user_path(user)
+          
+          attach_file 'user[avatar]', Rails.root.join('spec/fixtures/test_image.jpg')
+          click_button '更新する'
+          
+          visit user_path(user)
+          
+          
+          expect(page).to have_selector('img')  # まずは画像タグの存在を確認
     end
   end
 end

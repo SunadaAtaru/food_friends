@@ -1,6 +1,14 @@
-
 <div class="profile-container">
   <h1>プロフィール</h1>
+
+  # app/views/users/show.html.erb
+  <div class="profile-avatar">
+    <% if @user.avatar.present? %>
+      <%= image_tag @user.avatar.url, alt: "#{@user.username}のプロフィール画像" %>
+    <% else %>
+      <%= image_tag @user.avatar.default_url, alt: "デフォルトプロフィール画像" %>
+    <% end %>
+  </div>
 
   <div class="profile-content">
     <div class="profile-item">

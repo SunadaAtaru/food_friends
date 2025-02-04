@@ -1,7 +1,7 @@
 # spec/requests/users_spec.rb
 require 'rails_helper'
 
-RSpec.describe "ユーザー認証", type: :request do
+RSpec.describe 'ユーザー認証', type: :request do
   # サインインページへのGETリクエストに対するテスト
   describe 'GET /users/sign_in' do
     it '成功レスポンスが返されること' do

@@ -3,6 +3,19 @@
   <h1>プロフィール編集</h1>
 
   <%= form_with(model: @user, local: true) do |f| %>
+
+   <!-- アバター画像フィールドを追加 -->
+    <div class="form-group">
+      <%= f.label :avatar, 'プロフィール画像' %>
+      <%= f.file_field :avatar %>
+      <% if @user.avatar? %>
+        <div class="current-avatar">
+          <p>現在の画像</p>
+          <%= image_tag @user.avatar.thumb.url %>
+        </div>
+      <% end %>
+    </div>
+
     <div class="form-group">
       <%= f.label :username, 'ユーザー名' %>
       <%= f.text_field :username %>

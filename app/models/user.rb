@@ -18,4 +18,7 @@ class User < ApplicationRecord
 
   # 連絡先は任意、最大50文字まで
   validates :contact, length: { maximum: 50 }, allow_blank: true
+
+  # アバターアップローダーをマウント
+  mount_uploader :avatar, AvatarUploader
 end
