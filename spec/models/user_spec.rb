@@ -38,19 +38,49 @@ RSpec.describe User, type: :model do
   end
 
   describe 'avatarのテスト' do
-    include CarrierWave::Test::Matchers
-
     it 'avatarを添付できること' do
-      user = User.create(
+      user = User.create!(
         email: 'test@example.com',
         password: 'password',
         username: 'testuser'
       )
-      File.open(Rails.root.join('spec', 'fixtures', 'test_image.jpg')) do |f|
-        user.avatar = f
+  
+      file_path = Rails.root.join('spec', 'fixtures', 'test_image.jpg')
+      user.avatar = File.open(file_path)
+      
+      if user.valid?
+        puts "Validation passed"
+      else
+        puts "Validation failed: #{user.errors.full_messages}"
       end
+  
       expect(user.save).to be true
-      expect(user.avatar).to be_present
+      expect(user.avatar.file.exists?).to be true
+    end
+  end
+          
+
+  describe 'アカウント管理機能' do
+    let(:user) { User.create(email: 'test@example.com', password: 'password', username: 'testuser') }
+
+    it 'パスワードを変更できること' do
+      expect(user.update(password: 'newpassword', password_confirmation: 'newpassword')).to be true
+    end
+
+    it '現在のパスワードなしではメールアドレスを変更できないこと' do
+      expect(user.update_with_password(
+        email: 'new@example.com',
+        current_password: nil
+      )).to be false
+    end
+
+    it '現在のパスワードがあれば、メールアドレスを変更できること' do
+      expect(
+        user.update_with_password(
+          email: 'new@example.com',
+          current_password: 'password'
+        )
+      ).to be true
     end
   end
 end

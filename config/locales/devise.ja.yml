@@ -1,0 +1,22 @@
+ja:
+  devise:
+    confirmations:
+      confirmed: "メールアドレスが正常に確認されました。"
+      send_instructions: "メールアドレス確認の手順を記載したメールを数分以内に送信します。"
+      send_paranoid_instructions: "もしメールアドレスがデータベースに存在していれば、手順を記載したメールを送信します。"
+    failure:
+      already_authenticated: "すでにサインインしています。"
+      inactive: "アカウントがまだ有効化されていません。"
+      invalid: "メールアドレスまたはパスワードが間違っています。"
+      locked: "アカウントがロックされています。"
+      timeout: "セッションが期限切れになりました。再度サインインしてください。"
+      unauthenticated: "続行するにはサインインまたはサインアップが必要です。"
+    passwords:
+      updated: "パスワードが正常に変更されました。サインインしました。"
+    registrations:
+      destroyed: "アカウントが正常に削除されました。"
+      signed_up: "ようこそ！サインアップが成功しました。"
+      updated: "アカウント情報を更新しました。"
+    sessions:
+      signed_in: "サインインしました。"
+      signed_out: "サインアウトしました。"

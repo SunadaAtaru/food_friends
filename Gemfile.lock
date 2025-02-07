@@ -65,7 +65,6 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    benchmark (0.4.0)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -85,7 +84,7 @@ GEM
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
       ssrf_filter (~> 1.0, < 1.1.0)
-    concurrent-ruby (1.3.5)
+    concurrent-ruby (1.3.4)
     crass (1.0.6)
     date (3.4.1)
     devise (4.9.4)
@@ -130,24 +129,22 @@ GEM
       logger
       mime-types-data (~> 3.2015)
     mime-types-data (3.2025.0107)
-    mini_magick (5.1.2)
-      benchmark
-      logger
+    mini_magick (4.11.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
     msgpack (1.7.5)
-    net-imap (0.4.18)
+    net-imap (0.5.5)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.5.0)
+    net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.17.2)
+    nokogiri (1.18.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -273,9 +270,9 @@ GEM
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
-    sprockets-rails (3.4.2)
-      actionpack (>= 5.2)
-      activesupport (>= 5.2)
+    sprockets-rails (3.5.2)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     ssrf_filter (1.0.8)
     thor (1.3.2)
@@ -326,7 +323,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.2.0)
   jbuilder (~> 2.7)
   listen (~> 3.3)
-  mini_magick
+  mini_magick (~> 4.11.0)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
@@ -346,7 +343,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 3.0.6p216
+   ruby 3.1.2p20
 
 BUNDLED WITH
    2.4.20
