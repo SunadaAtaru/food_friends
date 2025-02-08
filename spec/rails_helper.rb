@@ -64,6 +64,12 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+  end
+
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:

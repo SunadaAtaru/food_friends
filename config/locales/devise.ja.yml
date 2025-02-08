@@ -12,7 +12,11 @@ ja:
       timeout: "セッションが期限切れになりました。再度サインインしてください。"
       unauthenticated: "続行するにはサインインまたはサインアップが必要です。"
     passwords:
-      updated: "パスワードが正常に変更されました。サインインしました。"
+      no_token: "このページにはアクセスできません。パスワード再設定メールのリンクからアクセスされた場合には、URL をご確認ください。"
+      send_instructions: "パスワードの再設定について数分以内にメールでご連絡いたします。"
+      send_paranoid_instructions: "メールアドレスが登録済みの場合、パスワード再設定用のメールが数分以内に送信されます。"
+      updated: "パスワードが正しく変更されました。"
+      updated_not_active: "パスワードが正しく変更されました。"
     registrations:
       destroyed: "アカウントが正常に削除されました。"
       signed_up: "ようこそ！サインアップが成功しました。"
@@ -20,3 +24,32 @@ ja:
     sessions:
       signed_in: "サインインしました。"
       signed_out: "サインアウトしました。"
+    # 以下を追加
+    mailer:
+      confirmation_instructions:
+        subject: "アカウントの確認手順"
+      reset_password_instructions:
+        subject: "パスワードの再設定手順"
+      unlock_instructions:
+        subject: "アカウントのロック解除手順"
+    errors:
+      messages:
+        not_saved: "エラーが発生したため %{resource} は保存されませんでした。"
+        already_confirmed: "は既に登録済みです。ログインしてください。"
+        confirmation_period_expired: "の期限が切れました。%{period} までに確認する必要があります。 新しくリクエストしてください。"
+        expired: "の有効期限が切れました。新しくリクエストしてください。"
+        not_found: "は見つかりませんでした。"
+        not_locked: "は凍結されていません。"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "を入力してください"
+              taken: "は既に使用されています"
+            password:
+              blank: "を入力してください"
+              too_short: "は%{count}文字以上で入力してください"
+            password_confirmation:
+              confirmation: "とパスワードの入力が一致しません"

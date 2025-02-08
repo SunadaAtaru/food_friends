@@ -31,7 +31,8 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
-
+  gem 'letter_opener'
+  gem 'letter_opener_web'  # Web UIでメールを確認できる
   gem 'ruby-lsp', require: false
 end
 

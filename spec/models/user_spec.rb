@@ -2,10 +2,12 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
+  let(:user) { create(:user) }
+  
   describe 'バリデーションのテスト' do
     # テスト用のユーザーを作成
-    let(:user) { User.create(email: 'test@example.com', password: 'password', username: 'testuser') }
-
+    
     # 有効な属性がある場合、バリデーションが通ることをテスト
     it 'すべての属性が有効な場合、ユーザーは有効であること' do
       expect(user).to be_valid
@@ -81,6 +83,26 @@ RSpec.describe User, type: :model do
           current_password: 'password'
         )
       ).to be true
+    end
+   end
+
+   describe 'パスワードリセット' do
+
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+    
+    it 'パスワードリセットトークンを生成できる' do
+      expect { 
+        user.send_reset_password_instructions 
+      }.to change { user.reset_password_token }.from(nil)
+    end
+    
+    # パスワードリセット関連の追加のテストがあれば、ここに追加
+    it 'パスワードリセット用のメールを送信できる' do
+      expect { 
+        user.send_reset_password_instructions 
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 end
