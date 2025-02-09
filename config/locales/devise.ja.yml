@@ -21,6 +21,8 @@ ja:
       destroyed: "アカウントが正常に削除されました。"
       signed_up: "ようこそ！サインアップが成功しました。"
       updated: "アカウント情報を更新しました。"
+      new:
+       sign_up: "アカウント登録"  # この行を追加
     sessions:
       signed_in: "サインインしました。"
       signed_out: "サインアウトしました。"

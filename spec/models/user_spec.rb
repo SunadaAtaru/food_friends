@@ -87,7 +87,8 @@ RSpec.describe User, type: :model do
    end
 
    describe 'パスワードリセット' do
-
+    let(:user) { create(:user) }  # ここに追加
+  
     before do
       ActionMailer::Base.deliveries.clear
     end
@@ -98,11 +99,30 @@ RSpec.describe User, type: :model do
       }.to change { user.reset_password_token }.from(nil)
     end
     
-    # パスワードリセット関連の追加のテストがあれば、ここに追加
     it 'パスワードリセット用のメールを送信できる' do
       expect { 
         user.send_reset_password_instructions 
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+  # spec/models/user_spec.rb に追加
+  describe 'メール確認機能' do
+    let(:user) { create(:user, confirmed_at: nil) }
+
+    it '確認前のユーザーは未確認状態である' do
+      expect(user.confirmed?).to be_falsey
+    end
+
+    it '確認後のユーザーは確認済み状態になる' do
+      user.confirm
+      expect(user.confirmed?).to be_truthy
+    end
+
+    it 'メールアドレス変更時に確認が必要' do
+      confirmed_user = create(:user, confirmed_at: Time.current)
+      confirmed_user.email = 'new@example.com'
+      confirmed_user.save
+      expect(confirmed_user.unconfirmed_email).to eq('new@example.com')
     end
   end
 end

@@ -3,7 +3,8 @@
 # User model for managing user accounts and profiles
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :confirmable  # この行を追加
 
   # ユーザー名は必須、一意性、最小3文字、最大30文字
   validates :username, presence: true,
