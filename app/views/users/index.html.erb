@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h1 class="mb-4">ユーザー一覧</h1>
+
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <!-- プロフィール画像 -->
+              <% if user.avatar.present? %>
+                <%= image_tag user.avatar.url, class: "rounded-circle me-3", style: "width: 64px; height: 64px" %>
+              <% end %>
+              
+              <!-- ユーザー基本情報 -->
+              <div>
+                <h5 class="card-title mb-1"><%= user.username %></h5>
+                <p class="card-text text-muted mb-2"><%= user.email %></p>
+                
+                <!-- プロフィールへのリンク -->
+                <%= link_to 'プロフィール', user_path(user), class: "btn btn-outline-primary btn-sm" %>
+                
+                <!-- 管理者用の操作ボタン -->
+                <% if current_user&.admin? %>
+                  <%= link_to 'ユーザー削除', user_path(user), 
+                      method: :delete,
+                      data: { confirm: '本当にこのユーザーを削除しますか？' },
+                      class: 'btn btn-outline-danger btn-sm ms-2' %>
+                <% end %>
+              </div>
+            </div>
+            
+            <!-- 追加情報 -->
+            <div class="mt-3 text-muted">
+              <small>登録日: <%= l user.created_at, format: :long %></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
