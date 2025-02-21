@@ -5,11 +5,11 @@ describe 'POST /users/confirmation' do
   it '確認メールが再送信される' do
     ActionMailer::Base.deliveries.clear
 
-    expect {
-      post user_confirmation_path, params: { 
-        user: { email: unconfirmed_user.email } 
+    expect do
+      post user_confirmation_path, params: {
+        user: { email: unconfirmed_user.email }
       }
-    }.to change { ActionMailer::Base.deliveries.size }.by(1)
+    end.to change { ActionMailer::Base.deliveries.size }.by(1)
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail.subject).to eq('アカウントの確認手順')

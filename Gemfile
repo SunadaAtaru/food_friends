@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-# gem 'concurrent-ruby', '1.3.4' 
+# gem 'concurrent-ruby', '1.3.4'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'carrierwave'
 gem 'devise'
@@ -25,15 +25,15 @@ group :development, :test do
 end
 
 group :development do
+  gem 'letter_opener'
+  gem 'letter_opener_web' # Web UIでメールを確認できる
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
+  gem 'ruby-lsp', require: false
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
-  gem 'letter_opener'
-  gem 'letter_opener_web'  # Web UIでメールを確認できる
-  gem 'ruby-lsp', require: false
 end
 
 group :test do

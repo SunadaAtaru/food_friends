@@ -19,7 +19,7 @@ RSpec.describe 'ユーザー', type: :request do
       click_button '更新する'
       expect(page).to have_content('プロフィールを更新しました')
       visit user_path(user)
-      expect(page).to have_selector("img")
+      expect(page).to have_selector('img')
     end
   end
 

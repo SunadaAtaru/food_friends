@@ -1,7 +1,7 @@
 # spec/requests/users/registrations_spec.rb
 require 'rails_helper'
 
-RSpec.describe "Users::Registrations", type: :request do
+RSpec.describe 'Users::Registrations', type: :request do
   let(:user) { User.create!(email: 'test@example.com', password: 'password', username: 'testuser') }
 
   before do
@@ -38,9 +38,9 @@ RSpec.describe "Users::Registrations", type: :request do
 
   describe 'DELETE /users' do
     it 'アカウントを削除できる' do
-      expect {
+      expect do
         delete user_registration_path
-      }.to change(User, :count).by(-1)
+      end.to change(User, :count).by(-1)
       expect(response).to redirect_to(root_path)
     end
   end

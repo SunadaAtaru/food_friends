@@ -2,12 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   let(:user) { create(:user) }
-  
+
   describe 'バリデーションのテスト' do
     # テスト用のユーザーを作成
-    
+
     # 有効な属性がある場合、バリデーションが通ることをテスト
     it 'すべての属性が有効な場合、ユーザーは有効であること' do
       expect(user).to be_valid
@@ -46,21 +45,20 @@ RSpec.describe User, type: :model do
         password: 'password',
         username: 'testuser'
       )
-  
+
       file_path = Rails.root.join('spec', 'fixtures', 'test_image.jpg')
       user.avatar = File.open(file_path)
-      
+
       if user.valid?
-        puts "Validation passed"
+        puts 'Validation passed'
       else
         puts "Validation failed: #{user.errors.full_messages}"
       end
-  
+
       expect(user.save).to be true
       expect(user.avatar.file.exists?).to be true
     end
   end
-          
 
   describe 'アカウント管理機能' do
     let(:user) { User.create(email: 'test@example.com', password: 'password', username: 'testuser') }
@@ -71,9 +69,9 @@ RSpec.describe User, type: :model do
 
     it '現在のパスワードなしではメールアドレスを変更できないこと' do
       expect(user.update_with_password(
-        email: 'new@example.com',
-        current_password: nil
-      )).to be false
+               email: 'new@example.com',
+               current_password: nil
+             )).to be false
     end
 
     it '現在のパスワードがあれば、メールアドレスを変更できること' do
@@ -84,25 +82,25 @@ RSpec.describe User, type: :model do
         )
       ).to be true
     end
-   end
+  end
 
-   describe 'パスワードリセット' do
-    let(:user) { create(:user) }  # ここに追加
-  
+  describe 'パスワードリセット' do
+    let(:user) { create(:user) } # ここに追加
+
     before do
       ActionMailer::Base.deliveries.clear
     end
-    
+
     it 'パスワードリセットトークンを生成できる' do
-      expect { 
-        user.send_reset_password_instructions 
-      }.to change { user.reset_password_token }.from(nil)
+      expect do
+        user.send_reset_password_instructions
+      end.to change { user.reset_password_token }.from(nil)
     end
-    
+
     it 'パスワードリセット用のメールを送信できる' do
-      expect { 
-        user.send_reset_password_instructions 
-      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect do
+        user.send_reset_password_instructions
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
   # spec/models/user_spec.rb に追加

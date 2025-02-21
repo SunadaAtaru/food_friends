@@ -15,7 +15,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def default_url
     ActionController::Base.helpers.asset_path('fallback/default_avatar.png')
   end
-  
+
   # アップロード後の処理
   # process resize_to_fit: [800, 800]
   process convert: 'jpg'
@@ -32,14 +32,14 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def extension_allowlist
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 
   def resize_to_fit(*args)
     super
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Image resize failed: #{e.message}"
-    raise CarrierWave::ProcessingError, "Failed to resize image"
+    raise CarrierWave::ProcessingError, 'Failed to resize image'
   end
 
   # 画像処理の設定を追加

@@ -36,7 +36,6 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Capybara.javascript_driver = :selenium_chrome
 
-
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -71,15 +70,13 @@ RSpec.configure do |config|
     Rails.application.routes.default_url_options[:host] = 'localhost:3000'
   end
 
-
-
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include ActiveJob::TestHelper
 
-  config.include ActionMailer::TestHelper  # この行を追加
+  config.include ActionMailer::TestHelper # この行を追加
   config.before(:each) do
     ActionMailer::Base.deliveries.clear
   end

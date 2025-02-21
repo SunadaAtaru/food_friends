@@ -66,15 +66,14 @@ RSpec.describe 'ユーザープロフィール管理', type: :system do
 
     # spec/system/user_profile_spec.rb
     it 'ユーザーがアバターをアップロードできること' do
-          visit edit_user_path(user)
-          
-          attach_file 'user[avatar]', Rails.root.join('spec/fixtures/test_image.jpg')
-          click_button '更新する'
-          
-          visit user_path(user)
-          
-          
-          expect(page).to have_selector('img')  # まずは画像タグの存在を確認
+      visit edit_user_path(user)
+
+      attach_file 'user[avatar]', Rails.root.join('spec/fixtures/test_image.jpg')
+      click_button '更新する'
+
+      visit user_path(user)
+
+      expect(page).to have_selector('img') # まずは画像タグの存在を確認
     end
   end
 end
