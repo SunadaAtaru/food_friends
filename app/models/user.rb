@@ -22,4 +22,6 @@ class User < ApplicationRecord
 
   # アバターアップローダーをマウント
   mount_uploader :avatar, AvatarUploader
+
+  has_many :food_posts, dependent: :destroy # ユーザー削除時に関連する投稿も削除
 end

@@ -1,37 +1,29 @@
-# spec/models/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
 
   describe 'バリデーションのテスト' do
-    # テスト用のユーザーを作成
-
-    # 有効な属性がある場合、バリデーションが通ることをテスト
     it 'すべての属性が有効な場合、ユーザーは有効であること' do
       expect(user).to be_valid
     end
 
-    # ユーザー名がない場合、バリデーションが失敗することをテスト
     it 'ユーザー名がない場合、無効であること' do
       user.username = nil
       expect(user).not_to be_valid
     end
 
-    # 重複したユーザー名が存在する場合、バリデーションが失敗することをテスト
     it '重複したユーザー名が存在する場合、無効であること' do
       duplicate_user = user.dup
       duplicate_user.email = 'another@example.com'
       expect(duplicate_user).not_to be_valid
     end
 
-    # ユーザー名が3文字未満の場合、バリデーションが失敗することをテスト
     it 'ユーザー名が3文字未満の場合、無効であること' do
       user.username = 'ab'
       expect(user).not_to be_valid
     end
 
-    # ユーザー名が30文字を超える場合、バリデーションが失敗することをテスト
     it 'ユーザー名が30文字を超える場合、無効であること' do
       user.username = 'a' * 31
       expect(user).not_to be_valid
@@ -48,12 +40,6 @@ RSpec.describe User, type: :model do
 
       file_path = Rails.root.join('spec', 'fixtures', 'test_image.jpg')
       user.avatar = File.open(file_path)
-
-      if user.valid?
-        puts 'Validation passed'
-      else
-        puts "Validation failed: #{user.errors.full_messages}"
-      end
 
       expect(user.save).to be true
       expect(user.avatar.file.exists?).to be true
@@ -85,7 +71,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'パスワードリセット' do
-    let(:user) { create(:user) } # ここに追加
+    let(:user) { create(:user) }
 
     before do
       ActionMailer::Base.deliveries.clear
@@ -103,7 +89,7 @@ RSpec.describe User, type: :model do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
-  # spec/models/user_spec.rb に追加
+
   describe 'メール確認機能' do
     let(:user) { create(:user, confirmed_at: nil) }
 
@@ -122,5 +108,61 @@ RSpec.describe User, type: :model do
       confirmed_user.save
       expect(confirmed_user.unconfirmed_email).to eq('new@example.com')
     end
+  end
+
+  describe '管理者機能' do
+    let!(:admin) { create(:user, admin: true) }
+    let!(:user) { create(:user, admin: false) }
+
+    it 'デフォルトで一般ユーザーは管理者ではない' do
+      new_user = create(:user)
+      expect(new_user.admin?).to be false
+    end
+
+    it '管理者フラグを持つユーザーは管理者である' do
+      expect(admin.admin?).to be true
+    end
+
+    it '一般ユーザーは管理者ではない' do
+      expect(user.admin?).to be false
+    end
+
+    it '一般ユーザーを管理者に変更できる' do
+      user.update(admin: true)
+      expect(user.reload.admin?).to be true
+    end
+
+    it '管理者を一般ユーザーに変更できる' do
+      admin.update(admin: false)
+      expect(admin.reload.admin?).to be false
+    end
+
+    context '管理者スコープのテスト' do
+      it '管理者のみ取得できる' do
+        expect(User.where(admin: true)).to include(admin)
+        expect(User.where(admin: true)).not_to include(user)
+      end
+    end
+  end
+
+  describe 'ユーザー削除機能' do
+    let!(:admin) { create(:user, admin: true) }
+    let!(:user) { create(:user, admin: false) }
+
+    it '一般ユーザーを削除できる' do
+      expect { user.destroy }.to change(User, :count).by(-1)
+    end
+
+    it '管理者を削除できる' do
+      expect { admin.destroy }.to change(User, :count).by(-1)
+    end
+
+    # context '関連データの削除' do
+    #   let!(:food_post) { create(:food_post, user: user) }
+
+    #   it 'ユーザーを削除すると関連する投稿も削除される' do
+    #     expect { user.destroy }.to change(FoodPost, :count).by(-1)
+    #   end
+    # end
   end
 end

@@ -1,22 +1,30 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+# ruby '3.1.2'
+ruby '3.0.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 # gem 'concurrent-ruby', '1.3.4'
+gem 'concurrent-ruby', '1.3.4'
+
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'carrierwave'
 gem 'devise'
 gem 'jbuilder', '~> 2.7'
+gem 'logger', '1.6.5'
+# gem 'logger', '~> 1.5.1'
+
 gem 'mini_magick', '~> 4.11.0'
 
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.4.6'
+# gem 'rails', '~> 6.1.4.6'
+gem 'rails', '~> 6.1.7.6'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
-gem 'webpacker', '~> 5.0'
+# gem 'webpacker', '~> 5.0'
+gem 'webpacker', '~> 5.4.4' # または
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

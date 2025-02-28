@@ -1,25 +1,33 @@
 ja:
- activerecord:
-   models:
-     user: ユーザー
-   attributes:
-     user:
-       username: ユーザー名
-       email: メールアドレス
-       password: パスワード
-       password_confirmation: パスワード（確認）
-   errors:
-     models:
-       user:
-         attributes:
-           username:
-             blank: を入力してください
-             too_short: は%{count}文字以上で入力してください
-           email:
-             blank: を入力してください
-             taken: はすでに使用されています
-           password:
-             blank: を入力してください
-             too_short: は%{count}文字以上で入力してください
-     messages:
-       not_saved: "エラーが発生したため保存できませんでした"  # この行を追加
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        username: ユーザー名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+    errors:
+      models:
+        user:
+          attributes:
+            username:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+            email:
+              blank: を入力してください
+              taken: はすでに使用されています
+            password:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+  errors:
+    messages:
+      not_saved: "エラーが発生したため保存できませんでした" 
+      not_found: "ページが見つかりません"  # ← ここに追加 
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+      long: "%Y年%m月%d日 %H:%M"
+      short: "%m/%d %H:%M"

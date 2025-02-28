@@ -1,31 +1,24 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[show edit update destroy]
-  before_action :require_admin, only: [:destroy]
+  before_action :set_user, only: %i[show edit update]
 
-  def show
-    # プロフィール表示用
+  def index
+    @users = User.page(params[:page]).per(10) # 1ページに10人表示
   end
+
+  def show; end
 
   def edit
     return if @user == current_user
 
-    redirect_to user_path(@user), alert: '他のユーザーのプロフィールは編集できません'
+    redirect_to root_path, alert: '他のユーザーのプロフィールは編集できません'
   end
 
   def update
     if @user == current_user && @user.update(user_params)
       redirect_to user_path(@user), notice: 'プロフィールを更新しました'
     else
-      render :edit
-    end
-  end
-
-  def destroy
-    if @user.destroy
-      redirect_to users_path, notice: "ユーザーを削除しました。"
-    else
-      redirect_to user_path(@user), alert: "ユーザーの削除に失敗しました。"
+      render :edit, status: :unprocessable_entity
     end
   end
 
