@@ -1,0 +1,17 @@
+// custom.scss
+.navbar-pink {
+  background-color: #ff69b4; /* ホットピンク - お好みの色コードに変更できます */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  .navbar-brand {
+    color: white;
+  }
+  
+  .nav-link {
+    color: white;
+    
+    &:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}

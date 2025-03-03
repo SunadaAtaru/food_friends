@@ -1,0 +1,109 @@
+<%# app/views/food_posts/show.html.erb %>
+<div class="container">
+ <div class="card shadow">
+   <div class="card-body">
+     <h1 class="card-title h2 mb-4"><%= @food_post.title %></h1>
+     
+     <% if @food_post.image? %>
+       <%= image_tag @food_post.image.url, class: "food-post-image rounded mb-4" %>
+     <% end %>
+     
+     <div class="row mb-4">
+       <div class="col-md-6">
+         <h3 class="h5">数量</h3>
+         <p><%= @food_post.quantity %><%= @food_post.unit %></p>
+       </div>
+       
+       <div class="col-md-6">
+         <h3 class="h5">消費期限</h3>
+         <p class="formatted-date"><%= @food_post.expiration_date %></p>
+       </div>
+       
+       <div class="col-md-6">
+         <h3 class="h5">受け渡し場所</h3>
+         <p><%= @food_post.pickup_location %></p>
+       </div>
+       
+       <div class="col-md-6">
+         <h3 class="h5">受け渡し可能時間</h3>
+         <p><%= @food_post.pickup_time_slot %></p>
+       </div>
+     </div>
+     
+     <% if @food_post.description.present? %>
+       <div class="mb-4">
+         <h3 class="h5">補足説明</h3>
+         <p><%= @food_post.description %></p>
+       </div>
+     <% end %>
+     
+     <% if @food_post.reason.present? %>
+       <div class="mb-4">
+         <h3 class="h5">提供理由</h3>
+         <p><%= @food_post.reason %></p>
+       </div>
+     <% end %>
+     
+     <% if current_user == @food_post.user %>
+       <div class="d-flex gap-2">
+         <%= link_to "編集", edit_food_post_path(@food_post),
+              class: "btn btn-create-outline" %>
+         <%= link_to "削除", food_post_path(@food_post),
+              method: :delete,
+              data: { confirm: "本当に削除しますか？" },
+              class: "btn btn-delete" %>
+       </div>
+     <% end %>
+
+          <%# リクエスト送信フォーム %>
+          <%# app/views/food_posts/show.html.erb %>
+<div class="container">
+  <div class="card shadow">
+    <div class="card-body">
+      <!-- 食品情報の表示部分（変更なし） -->
+
+      <!-- リクエスト送信フォーム -->
+      <% if current_user != @food_post.user %>
+        <div class="mt-4 border-top pt-4">
+          <h2 class="h4 mb-3">受け取りリクエスト</h2>
+          <%= render 'requests/form', 
+              food_post: @food_post, 
+              request: Request.new, 
+              submit_text: "リクエストを送信" %>
+        </div>
+      <% end %>
+
+      <!-- リクエスト一覧とステータス更新 -->
+      <% if @food_post.requests.any? %>
+        <div class="mt-4 border-top pt-4">
+          <h2 class="h4 mb-3">リクエスト一覧</h2>
+          <div class="list-group">
+            <% @food_post.requests.each do |request| %>
+              <div class="list-group-item">
+                <!-- リクエスト情報とメッセージフォーム -->
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <strong><%= request.user.username %></strong>
+                    <span class="badge bg-<%= request.status == 'pending' ? 'warning' : 'success' %> ms-2">
+                      <%= t("enums.request.status.#{request.status}") %>
+                    </span>
+                  </div>
+                  <small class="text-muted">
+                    <%= request.created_at.strftime("%Y/%m/%d %H:%M") %>
+                  </small>
+                </div>
+
+                <p class="mb-3"><%= request.message %></p>
+
+                <%= render 'requests/form',
+                    food_post: @food_post,
+                    request: request,
+                    submit_text: "メッセージを送信" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

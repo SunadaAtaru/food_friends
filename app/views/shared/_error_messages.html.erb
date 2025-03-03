@@ -1,0 +1,15 @@
+<!-- app/views/shared/_error_messages.html.erb -->
+<% if object.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger w-100 mb-0">
+    <div class="container">
+      <h2 class="h5 mb-2">
+        <%= object.errors.count %>個のエラーにより保存できません：
+      </h2>
+      <ul class="mb-0">
+        <% object.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

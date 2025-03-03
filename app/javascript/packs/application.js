@@ -16,3 +16,5 @@ ActiveStorage.start()
 // ✅ Bootstrap を追加
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import "../stylesheets/custom.scss";

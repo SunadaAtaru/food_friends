@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <h1 class="mb-4">ユーザー管理</h1>
-
+  
   <div class="row">
     <% @users.each do |user| %>
       <div class="col-md-6 mb-4">
@@ -10,22 +10,26 @@
               <% if user.avatar.present? %>
                 <%= image_tag user.avatar.url, class: "rounded-circle me-3", style: "width: 64px; height: 64px" %>
               <% end %>
-
+              
               <div>
                 <h5 class="card-title mb-1"><%= user.username %></h5>
                 <p class="card-text text-muted mb-2"><%= user.email %></p>
-
+                
                 <% if current_user.admin? %>
-                  <%= link_to 'ユーザー削除', admin_user_path(user), 
-                      method: :delete,
-                      data: { confirm: '本当にこのユーザーを削除しますか？' },
-                      class: 'btn btn-outline-danger btn-sm ms-2' %>
+                  <% if current_user != user %> <!-- 自分自身は削除できないようにする -->
+                    <%= link_to 'ユーザー削除', admin_user_path(user),
+                         method: :delete,
+                        data: { confirm: '本当にこのユーザーを削除しますか？' },
+                        class: 'btn btn-outline-danger btn-sm ms-2' %>
+                  <% else %>
+                    <span class="badge bg-info">現在のアカウント</span>
+                  <% end %>
                 <% else %>
                   <%= link_to 'プロフィール', user_path(user), class: "btn btn-outline-primary btn-sm" %>
                 <% end %>
               </div>
             </div>
-
+            
             <div class="mt-3 text-muted">
               <small>登録日: <%= l user.created_at, format: :long %></small>
             </div>
@@ -35,4 +39,3 @@
     <% end %>
   </div>
 </div>
-

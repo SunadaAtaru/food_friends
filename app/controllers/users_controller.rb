@@ -26,7 +26,11 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "ユーザーが見つかりません"
+    redirect_to root_path and return
   end
+  
 
   def user_params
     params.require(:user).permit(:username, :introduction, :address,

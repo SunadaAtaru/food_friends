@@ -14,9 +14,9 @@ gem 'devise'
 gem 'jbuilder', '~> 2.7'
 gem 'logger', '1.6.5'
 # gem 'logger', '~> 1.5.1'
-
+gem 'ransack'
+# gem 'carrierwave'
 gem 'mini_magick', '~> 4.11.0'
-
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 # gem 'rails', '~> 6.1.4.6'
@@ -25,6 +25,12 @@ gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 # gem 'webpacker', '~> 5.0'
 gem 'webpacker', '~> 5.4.4' # または
+# Gemfile
+gem 'will_paginate', '~> 3.3'
+# または
+gem 'kaminari', '~> 1.2'
+# Gemfile
+gem 'will_paginate-bootstrap4'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

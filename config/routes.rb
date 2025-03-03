@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[show edit update]
 
+  # 食品投稿機能のルーティングを追加
+  resources :food_posts
+
   # 管理者用のユーザー管理機能
   namespace :admin do
     resources :users, only: %i[index destroy] # 一覧表示と削除

@@ -1,40 +1,67 @@
-<div class="profile-container">
-  <h1>プロフィール</h1>
-
-  # app/views/users/show.html.erb
-  <div class="profile-avatar">
-    <% if @user.avatar.present? %>
-      <%= image_tag @user.avatar.url, alt: "#{@user.username}のプロフィール画像" %>
-    <% else %>
-      <%= image_tag @user.avatar.default_url, alt: "デフォルトプロフィール画像" %>
-    <% end %>
-  </div>
-
-  <div class="profile-content">
-    <div class="profile-item">
-      <strong>ユーザー名:</strong>
-      <%= @user.username %>
-    </div>
-
-    <div class="profile-item">
-      <strong>自己紹介:</strong>
-      <%= @user.introduction %>
-    </div>
-
-    <% if @user == current_user || @user.profile_visibility? %>
-      <div class="profile-item">
-        <strong>住所:</strong>
-        <%= @user.address %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0 fs-4">プロフィール</h2>
+        </div>
+        
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <% if @user.avatar.present? %>
+              <%= image_tag @user.avatar.url, alt: "#{@user.username}のプロフィール画像", class: "rounded-circle", style: "width: 150px; height: 150px; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag @user.avatar.default_url, alt: "デフォルトプロフィール画像", class: "rounded-circle", style: "width: 150px; height: 150px; object-fit: cover;" %>
+            <% end %>
+            <h3 class="mt-3"><%= @user.username %></h3>
+          </div>
+          
+          <div class="row mb-3">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header bg-light">
+                  <strong>自己紹介</strong>
+                </div>
+                <div class="card-body">
+                  <p class="card-text"><%= @user.introduction.presence || "自己紹介はまだ設定されていません" %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <% if @user == current_user || @user.profile_visibility? %>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <div class="card h-100">
+                  <div class="card-header bg-light">
+                    <strong>住所</strong>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text"><%= @user.address.presence || "未設定" %></p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-header bg-light">
+                    <strong>連絡先</strong>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text"><%= @user.contact.presence || "未設定" %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          
+          <% if @user == current_user %>
+            <div class="text-center mt-4">
+              <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
       </div>
-
-      <div class="profile-item">
-        <strong>連絡先:</strong>
-        <%= @user.contact %>
-      </div>
-    <% end %>
-
-    <% if @user == current_user %>
-      <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'edit-button' %>
-    <% end %>
+    </div>
   </div>
 </div>
