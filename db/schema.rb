@@ -10,51 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_250_218_141_049) do
+ActiveRecord::Schema.define(version: 2025_02_18_141049) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'food_posts', force: :cascade do |t|
-    t.string 'title', null: false
-    t.text 'description'
-    t.integer 'quantity', null: false
-    t.string 'unit', null: false
-    t.bigint 'user_id', null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.date 'expiration_date', null: false
-    t.string 'pickup_location', null: false
-    t.string 'pickup_time_slot'
-    t.string 'status', default: 'available', null: false
-    t.string 'image'
-    t.string 'reason'
-    t.index ['user_id'], name: 'index_food_posts_on_user_id'
+  create_table "food_posts", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.integer "quantity", null: false
+    t.string "unit", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "expiration_date", null: false
+    t.string "pickup_location", null: false
+    t.string "pickup_time_slot"
+    t.string "status", default: "available", null: false
+    t.string "image"
+    t.string "reason"
+    t.index ["user_id"], name: "index_food_posts_on_user_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email', default: '', null: false
-    t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.string 'username', null: false
-    t.text 'introduction'
-    t.string 'address'
-    t.string 'contact'
-    t.boolean 'profile_visibility', default: true, null: false
-    t.string 'avatar'
-    t.string 'confirmation_token'
-    t.datetime 'confirmed_at'
-    t.datetime 'confirmation_sent_at'
-    t.string 'unconfirmed_email'
-    t.boolean 'admin'
-    t.index ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
-    t.index ['username'], name: 'index_users_on_username', unique: true
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "username", null: false
+    t.text "introduction"
+    t.string "address"
+    t.string "contact"
+    t.boolean "profile_visibility", default: true, null: false
+    t.string "avatar"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.boolean "admin"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key 'food_posts', 'users'
+  add_foreign_key "food_posts", "users"
 end

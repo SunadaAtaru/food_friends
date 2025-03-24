@@ -24,4 +24,13 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   has_many :food_posts, dependent: :destroy # ユーザー削除時に関連する投稿も削除
+  
+  # 開発環境のみ、作成時に自動的に確認する
+  after_create :auto_confirm, if: -> { Rails.env.development? }
+
+  private
+
+  def auto_confirm
+    self.update_column(:confirmed_at, Time.current)
+  end
 end

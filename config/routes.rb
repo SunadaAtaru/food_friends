@@ -13,8 +13,7 @@ Rails.application.routes.draw do
     confirmations: 'users/confirmations'
   }
 
-  resources :users, only: %i[show edit update]
-
+  resources :users
   # 食品投稿機能のルーティングを追加
   resources :food_posts
 
