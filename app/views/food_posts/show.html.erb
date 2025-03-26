@@ -1,6 +1,5 @@
-<%# app/views/food_posts/show.html.erb %>
 <div class="container">
- <div class="card shadow">
+ <div class="card">
    <div class="card-body">
      <h1 class="card-title h2 mb-4"><%= @food_post.title %></h1>
      
@@ -54,13 +53,6 @@
               class: "btn btn-delete" %>
        </div>
      <% end %>
-
-          <%# リクエスト送信フォーム %>
-          <%# app/views/food_posts/show.html.erb %>
-<div class="container">
-  <div class="card shadow">
-    <div class="card-body">
-      <!-- 食品情報の表示部分（変更なし） -->
 
       <!-- リクエスト送信フォーム -->
       <% if current_user != @food_post.user %>
