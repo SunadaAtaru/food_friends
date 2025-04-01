@@ -16,6 +16,19 @@ Rails.application.routes.draw do
   resources :users
   # 食品投稿機能のルーティングを追加
   resources :food_posts
+  
+  # 食品リクエスト機能のルーティングを追加
+  resources :food_posts do
+    resources :food_requests, only: [:new, :create]
+  end
+  
+  resources :food_requests, only: [:index, :show] do
+    member do
+      patch :accept
+      patch :reject
+      patch :cancel
+    end
+  end
 
   # 管理者用のユーザー管理機能
   namespace :admin do
