@@ -1,7 +1,22 @@
 
-<!-- app/views/layouts/_flash_messages.html.erb -->
-<% flash.each do |message_type, message| %>
-  <div class="alert alert-<%= message_type %> alert-dismissible fade show" role="alert">
+<!-- app/views/shared/_flash_messages.html.erb -->
+
+
+
+
+<% flash.each do |type, message| %>
+  <% 
+    # フラッシュタイプに基づいてBootstrapのクラスを設定
+    flash_class = case type.to_s
+                  when 'notice' then 'alert alert-success'
+                  when 'alert' then 'alert alert-danger'
+                  when 'warning' then 'alert alert-warning'
+                  when 'info' then 'alert alert-info'
+                  else "alert alert-#{type}"
+                  end 
+  %>
+  
+  <div class="<%= flash_class %> alert-dismissible fade show" role="alert">
     <%= message %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>

@@ -1,7 +1,8 @@
-# frozen_string_literal: true
-
-# User model for managing user accounts and profiles
 class User < ApplicationRecord
+
+  has_many :food_posts
+  has_many :food_requests  # この行を追加
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable # この行を追加

@@ -18,6 +18,9 @@ class FoodRequest < ApplicationRecord
     # カスタムバリデーション: 「available」ステータスの食品のみリクエスト可能
     # on: :create は、新規作成時のみこのバリデーションを適用することを指定
     validate :food_post_available, on: :create
+
+    validate :message_or_pickup_time_present
+
     
     # クエリ用スコープ定義: ステータスごとのレコード取得を容易にする
     scope :pending, -> { where(status: "pending") }     # 保留中のリクエスト
@@ -26,6 +29,13 @@ class FoodRequest < ApplicationRecord
     scope :canceled, -> { where(status: "canceled") }   # キャンセル済みのリクエスト
     
     private
+
+    # カスタムバリデーションメソッド
+    def message_or_pickup_time_present
+      if message.blank? && pickup_time.blank?
+        errors.add(:base, "メッセージか希望受け取り時間のいずれかを入力してください")
+      end
+    end
     
     # カスタムバリデーションメソッド: 食品の期限が現在日より後であることを確認
     def food_post_not_expired
@@ -40,6 +50,6 @@ class FoodRequest < ApplicationRecord
         errors.add(:food_post, "この食品は既に取引中か譲渡済みです")
       end
     end
-  end
+end
   
   

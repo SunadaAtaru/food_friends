@@ -37,7 +37,9 @@ class FoodRequestsController < ApplicationController
       # 通知を送る処理などをここに追加
       redirect_to @food_post, notice: "リクエストを送信しました"
     else
-      render :new
+      # リダイレクトに変更（render :newではなく）
+      flash[:alert] = "入力内容に問題があります：" + @food_request.errors.full_messages.join(", ")
+      redirect_to new_food_post_food_request_path(@food_post)
     end
   end
   

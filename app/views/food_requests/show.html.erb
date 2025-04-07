@@ -1,0 +1,85 @@
+
+<div class="container">
+  <h1 class="text-center mb-4">リクエスト詳細</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h2 class="h5 mb-0">食品情報</h2>
+        </div>
+        <div class="card-body">
+          <p class="mb-2"><strong>タイトル:</strong> <%= link_to @food_request.food_post.title, @food_request.food_post, class: "text-decoration-none" %></p>
+          <p class="mb-2"><strong>数量:</strong> <%= @food_request.food_post.quantity %> <%= @food_request.food_post.unit %></p>
+          <p class="mb-0"><strong>消費期限:</strong> <%= l @food_request.food_post.expiration_date %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h2 class="h5 mb-0">リクエスト情報</h2>
+          <span class="badge <%= @food_request.status == 'pending' ? 'bg-warning' : (@food_request.status == 'accepted' ? 'bg-success' : 'bg-secondary') %>">
+            <%= t("food_request.status.#{@food_request.status}") %>
+          </span>
+        </div>
+        <div class="card-body">
+          <p class="mb-2"><strong>リクエスト日時:</strong> <%= l @food_request.created_at, format: :long %></p>
+          <% if @food_request.pickup_time.present? %>
+            <p class="mb-2"><strong>希望受け取り時間:</strong> <%= l @food_request.pickup_time %></p>
+          <% end %>
+          <p class="mb-2"><strong>メッセージ:</strong><br><%= @food_request.message %></p>
+          
+          <% if @food_request.status == "rejected" && @food_request.rejection_reason.present? %>
+            <div class="alert alert-light mt-3 mb-0">
+              <p class="mb-0"><strong>拒否理由:</strong><br><%= @food_request.rejection_reason %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <% if @food_request.food_post.user_id == current_user.id && @food_request.status == "pending" %>
+    <!-- 食品提供者向けのアクション -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="h5 mb-0">リクエスト対応</h2>
+      </div>
+      <div class="card-body">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
+          <%= link_to "承認する", accept_food_request_path(@food_request), method: :patch, class: "btn btn-success me-md-2", data: { confirm: "このリクエストを承認しますか？他の保留中リクエストは自動的に拒否されます。" } %>
+        </div>
+        
+        <%= form_with(model: @food_request, url: reject_food_request_path(@food_request), method: :patch, local: true) do |f| %>
+          <div class="form-group mb-3">
+            <%= f.label :rejection_reason, "拒否理由（任意）", class: "form-label" %>
+            <%= f.text_area :rejection_reason, class: "form-control", rows: 3 %>
+          </div>
+          <%= f.submit "拒否する", class: "btn btn-danger", data: { confirm: "このリクエストを拒否しますか？" } %>
+        <% end %>
+      </div>
+    </div>
+  <% elsif @food_request.user_id == current_user.id && @food_request.status == "pending" %>
+    <!-- リクエスト送信者向けのアクション -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="h5 mb-0">リクエスト操作</h2>
+      </div>
+      <div class="card-body">
+        <div class="d-grid gap-2">
+          <%= link_to "キャンセルする", cancel_food_request_path(@food_request), method: :patch, class: "btn btn-danger", data: { confirm: "リクエストをキャンセルしますか？" } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+    <% if current_user == @food_request.food_post.user %>
+      <%= link_to "投稿に戻る", @food_request.food_post, class: "btn btn-outline-secondary" %>
+    <% else %>
+      <%= link_to "リクエスト一覧に戻る", food_requests_path, class: "btn btn-outline-secondary" %>
+    <% end %>
+  </div>
+</div>

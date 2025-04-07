@@ -1,0 +1,39 @@
+
+<div class="container">
+  <h1 class="text-center mb-4">あなたのリクエスト一覧</h1>
+
+  <% if @food_requests.empty? %>
+    <div class="card">
+      <div class="card-body text-center py-5">
+        <p class="mb-0">リクエストがありません。</p>
+      </div>
+    </div>
+  <% else %>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <% @food_requests.each do |request| %>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0"><%= link_to request.food_post.title, request.food_post, class: "text-decoration-none" %></h5>
+              <span class="badge <%= request.status == 'pending' ? 'bg-warning' : (request.status == 'accepted' ? 'bg-success' : 'bg-secondary') %>">
+                <%= t("food_request.status.#{request.status}") %>
+              </span>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><strong>提供者:</strong> <%= request.food_post.user.username %></p>
+              <p class="card-text"><strong>リクエスト日時:</strong> <%= l request.created_at, format: :short %></p>
+            </div>
+            <div class="card-footer bg-transparent">
+              <div class="d-flex justify-content-between">
+               <%= link_to "詳細", food_request_path(food_request), class: "btn btn-outline-primary btn-sm" %>
+                <% if request.status == "pending" %>
+                  <%= link_to "キャンセル", cancel_food_request_path(request), method: :patch, class: "btn btn-outline-danger btn-sm", data: { confirm: "リクエストをキャンセルしますか？" } %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

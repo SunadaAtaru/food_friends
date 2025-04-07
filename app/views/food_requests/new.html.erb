@@ -1,0 +1,61 @@
+<div class="container">
+  <h1 class="text-center mb-4">食品リクエスト</h1>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h2 class="mb-0"><%= @food_post.title %></h2>
+    </div>
+    <div class="card-body">
+      <p><%= @food_post.description %></p>
+      <div class="row">
+        <div class="col-md-4">
+          <p><strong>数量:</strong> <%= @food_post.quantity %> <%= @food_post.unit %></p>
+        </div>
+        <div class="col-md-4">
+          <p><strong>消費期限:</strong> <%= @food_post.expiration_date.strftime('%Y年%m月%d日') %></p>
+        </div>
+        <div class="col-md-4">
+          <p><strong>受け取り場所:</strong> <%= @food_post.pickup_location %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">リクエスト情報</h3>
+    </div>
+    <div class="card-body">
+      <%= form_with(model: [@food_post, @food_request], local: true) do |f| %>
+        <% if @food_request.errors.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              <% @food_request.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="alert alert-info mb-3">
+          <small><i class="bi bi-info-circle"></i> メッセージか希望受け取り時間のいずれかを必ず入力してください</small>
+        </div>
+
+        <div class="form-group mb-3">
+          <%= f.label :message, "メッセージ", class: "form-label" %>
+          <%= f.text_area :message, class: "form-control", placeholder: "食品の提供者へのメッセージを入力してください", rows: 4 %>
+        </div>
+
+        <div class="form-group mb-4">
+          <%= f.label :pickup_time, "希望受け取り時間", class: "form-label" %>
+          <%= f.datetime_local_field :pickup_time, class: "form-control" %>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <%= link_to "戻る", @food_post, class: "btn btn-outline-secondary me-md-2" %>
+          <%= f.submit "リクエストを送信", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
